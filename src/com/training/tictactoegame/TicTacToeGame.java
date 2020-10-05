@@ -29,9 +29,23 @@ public class TicTacToeGame {
 			chooseCharacterForUser();
 		}
 	}
+	
+	/**
+	 *  To view the board 
+	 */
+	private static void showBoard() {
+		for (int i = 1; i < board.length; i++) {
+			System.out.print("[" + board[i] + "]");
+			if (i % 3 == 0) {
+				System.out.println("\n---------");
+
+			}
+		}
+	}
 
 	public static void main(String[] args) {
 		createBoard();
 		chooseCharacterForUser();
+		showBoard();
 	}
 }
