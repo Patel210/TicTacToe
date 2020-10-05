@@ -62,14 +62,23 @@ public class TicTacToeGame {
 	 * 
 	 */
 	private static boolean isMovePossible(int index) {
-
+		
 		return board[index] == ' ';
+	}
+	
+	/**
+	 *  To make the move
+	 *  
+	 */
+	private static void makeMove(int index, char playChar) {
+		board[index] = playChar;
+		showBoard();
 	}
 
 	public static void main(String[] args) {
 		createBoard();
 		chooseCharacterForUser();
 		showBoard();
-		getUserMove();
+		makeMove(getUserMove(), USER);
 	}
 }
