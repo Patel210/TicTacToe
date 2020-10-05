@@ -7,6 +7,7 @@ public class TicTacToeGame {
 	private static char[] board;
 	private static final Scanner SC = new Scanner(System.in);
 	private static char USER, COMPUTER;
+	private static final int HEAD = 0, TAIL = 1;
 
 	/**
 	 * Initializing board with empty spaces
@@ -74,11 +75,22 @@ public class TicTacToeGame {
 		board[index] = playChar;
 		showBoard();
 	}
+	
+	/**
+	 * Toss for deciding who plays first
+	 */
+	private static char whoPlaysFirst() {
+		int toss = (int) (Math.random() * 10) % 2;
+		return (toss == TAIL) ? COMPUTER : USER;
+		
+	}
 
 	public static void main(String[] args) {
 		createBoard();
 		chooseCharacterForUser();
 		showBoard();
+		whoPlaysFirst();
 		makeMove(getUserMove(), USER);
+		
 	}
 }
