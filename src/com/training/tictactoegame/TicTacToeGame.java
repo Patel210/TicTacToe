@@ -73,7 +73,6 @@ public class TicTacToeGame {
 	 */
 	private static void makeMove(int index, char playChar) {
 		board[index] = playChar;
-		showBoard();
 	}
 	
 	/**
@@ -100,6 +99,43 @@ public class TicTacToeGame {
 				|| (board[7] == ch && board[5] == ch && board[3] == ch));
 
 	}
+	
+	/**
+	 * To get computer move
+	 */
+	private static int getComputerMove() {
+		int winningMove = getWinningMove(COMPUTER);
+		if(winningMove != 0) {
+			return winningMove;
+		}
+		else {
+			while(true) {
+				int index = (int) (Math.random() * 10) % 9 + 1;
+				if(isMovePossible(index)) {
+					return index;
+				}
+			}
+		}
+	}
+
+	/**
+	 * To check whether winning move is possible
+	 * 
+	 */
+	private static int getWinningMove(char ch) {
+		for( int i = 1; i < board.length; i++) {
+			if(isMovePossible(i)) {
+				makeMove(i, ch);
+				if(isWinner(ch)) {
+					board[i] = ' ';
+					return i;
+				
+				}
+				board[i] = ' ';
+			}
+		}
+		return 0;
+	}
 
 	public static void main(String[] args) {
 		createBoard();
@@ -107,7 +143,8 @@ public class TicTacToeGame {
 		showBoard();
 		whoPlaysFirst();
 		makeMove(getUserMove(), USER);
-		System.out.println(isWinner(USER));
+		showBoard();
+		System.out.println(getComputerMove());
 		
 	}
 }
