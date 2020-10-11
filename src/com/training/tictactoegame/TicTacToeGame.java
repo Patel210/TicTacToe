@@ -53,6 +53,9 @@ public class TicTacToeGame {
 		while (true) {
 			if (index >= 1 && index <= 9 && isMovePossible(index)) {
 				return index;
+			} else {
+				System.out.println("This move can't be played! Please enter another move");
+				return getUserMove();
 			}
 		}
 	}
@@ -80,7 +83,6 @@ public class TicTacToeGame {
 	private static char whoPlaysFirst() {
 		int toss = (int) (Math.random() * 10) % 2;
 		return (toss == TAIL) ? COMPUTER : USER;
-
 	}
 
 	/**
@@ -157,14 +159,70 @@ public class TicTacToeGame {
 		return 0;
 	}
 
-	public static void main(String[] args) {
+	/**
+	 * To play the game till game draws or any one of User or Computer wins
+	 */
+	private static void play() {
 		createBoard();
 		chooseCharacterForUser();
-		showBoard();
-		whoPlaysFirst();
-		makeMove(getUserMove(), USER);
-		showBoard();
-		makeMove(getComputerMove(), COMPUTER);
-		showBoard();
+		boolean isUserTurn = false;
+		boolean isComputerTurn = false;
+		boolean isUserWon = false;
+		boolean isComputerWon = false;
+		int totalMoves = 0;
+		if (whoPlaysFirst() == COMPUTER) {
+			System.out.println("Computer plays first");
+			isComputerTurn = true;
+		} else {
+			System.out.println("User plays first");
+			isUserTurn = true;
+			showBoard();
+		}
+		while (!isUserWon && !isComputerWon && totalMoves < board.length - 1) {
+			if (isUserTurn) {
+				makeMove(getUserMove(), USER);
+				isUserTurn = false;
+				isComputerTurn = true;
+				totalMoves++;
+				System.out.println("-----------User Played------------");
+				showBoard();
+				if (totalMoves >= 5) {
+					isUserWon = isWinner(USER);
+					if (isUserWon) {
+						break;
+					}
+				}
+			}
+			if (isComputerTurn) {
+				if (totalMoves == 9) {
+					break;
+				}
+				makeMove(getComputerMove(), COMPUTER);
+				isUserTurn = true;
+				isComputerTurn = false;
+				totalMoves++;
+				System.out.println("-----------Computer Played------------");
+				showBoard();
+				if (totalMoves >= 5) {
+					isComputerWon = isWinner(COMPUTER);
+					if (isComputerWon) {
+						break;
+					}
+				}
+			}
+		}
+		if (isUserWon) {
+			System.out.println("Congratulations USER! You won the game!");
+		}
+		if (isComputerWon) {
+			System.out.println("Sorry USER! Computer won the game!");
+		}
+		if (!isUserWon && !isComputerWon) {
+			System.out.println("Game Draw!");
+		}
+	}
+
+	public static void main(String[] args) {
+		play();
 	}
 }
