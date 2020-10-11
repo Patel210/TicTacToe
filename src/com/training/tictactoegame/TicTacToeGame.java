@@ -65,7 +65,6 @@ public class TicTacToeGame {
 	 * 
 	 */
 	private static boolean isMovePossible(int index) {
-
 		return board[index] == ' ';
 	}
 
@@ -223,6 +222,13 @@ public class TicTacToeGame {
 	}
 
 	public static void main(String[] args) {
-		play();
+		while (true) {
+			play();
+			System.out.println("Hey User! Do you want to play again (Y/N)? ");
+			char choice = SC.next().charAt(0);
+			if (choice != 'Y' || choice != 'y') {
+				break;
+			}
+		}
 	}
 }
