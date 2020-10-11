@@ -123,6 +123,9 @@ public class TicTacToeGame {
 		if (move == 0) {
 			move = getCornerPosition();
 		}
+		if (move == 0) {
+			move = (board[5] == ' ') ? 5 : 0;
+		}
 		if (move != 0) {
 			return move;
 		} else {
