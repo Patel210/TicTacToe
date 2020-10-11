@@ -25,8 +25,7 @@ public class TicTacToeGame {
 		USER = SC.next().charAt(0);
 		if (USER == 'X' || USER == 'O') {
 			COMPUTER = (USER == 'X') ? 'O' : 'X';
-		}
-		else {
+		} else {
 			System.out.println("Strictly enter (X or O)");
 			chooseCharacterForUser();
 		}
@@ -59,31 +58,31 @@ public class TicTacToeGame {
 	}
 
 	/**
-	 *  To check whether the move is possible
+	 * To check whether the move is possible
 	 * 
 	 */
 	private static boolean isMovePossible(int index) {
-		
+
 		return board[index] == ' ';
 	}
-	
+
 	/**
-	 *  To make the move
-	 *  
+	 * To make the move
+	 * 
 	 */
 	private static void makeMove(int index, char playChar) {
 		board[index] = playChar;
 	}
-	
+
 	/**
 	 * Toss for deciding who plays first
 	 */
 	private static char whoPlaysFirst() {
 		int toss = (int) (Math.random() * 10) % 2;
 		return (toss == TAIL) ? COMPUTER : USER;
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * To check for winning conditions
@@ -99,22 +98,37 @@ public class TicTacToeGame {
 				|| (board[7] == ch && board[5] == ch && board[3] == ch));
 
 	}
-	
+
+	/**
+	 * returns corner position if any one of it is empty otherwise 0
+	 */
+	private static int getCornerPosition() {
+		int[] cornerPosition = { 1, 3, 7, 9 };
+		for (int corner : cornerPosition) {
+			if (board[corner] == ' ') {
+				return corner;
+			}
+		}
+		return 0;
+	}
+
 	/**
 	 * To get computer move
 	 */
 	private static int getComputerMove() {
-		int winningMove = getWinningMove(COMPUTER);
-		if(winningMove == 0) {
-			winningMove = getWinningMove(USER);
+		int move = getWinningMove(COMPUTER);
+		if (move == 0) {
+			move = getWinningMove(USER);
 		}
-		if(winningMove != 0) {
-			return winningMove;
+		if (move == 0) {
+			move = getCornerPosition();
 		}
-		else {
-			while(true) {
+		if (move != 0) {
+			return move;
+		} else {
+			while (true) {
 				int index = (int) (Math.random() * 10) % 9 + 1;
-				if(isMovePossible(index)) {
+				if (isMovePossible(index)) {
 					return index;
 				}
 			}
@@ -126,13 +140,13 @@ public class TicTacToeGame {
 	 * 
 	 */
 	private static int getWinningMove(char ch) {
-		for( int i = 1; i < board.length; i++) {
-			if(isMovePossible(i)) {
+		for (int i = 1; i < board.length; i++) {
+			if (isMovePossible(i)) {
 				makeMove(i, ch);
-				if(isWinner(ch)) {
+				if (isWinner(ch)) {
 					board[i] = ' ';
 					return i;
-				
+
 				}
 				board[i] = ' ';
 			}
@@ -148,6 +162,6 @@ public class TicTacToeGame {
 		makeMove(getUserMove(), USER);
 		showBoard();
 		makeMove(getComputerMove(), COMPUTER);
-		showBoard();		
+		showBoard();
 	}
 }
