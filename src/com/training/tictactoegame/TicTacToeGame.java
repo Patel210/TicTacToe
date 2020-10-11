@@ -105,6 +105,9 @@ public class TicTacToeGame {
 	 */
 	private static int getComputerMove() {
 		int winningMove = getWinningMove(COMPUTER);
+		if(winningMove == 0) {
+			winningMove = getWinningMove(USER);
+		}
 		if(winningMove != 0) {
 			return winningMove;
 		}
@@ -119,7 +122,7 @@ public class TicTacToeGame {
 	}
 
 	/**
-	 * To check whether winning move is possible
+	 * To get the winning move
 	 * 
 	 */
 	private static int getWinningMove(char ch) {
@@ -144,7 +147,7 @@ public class TicTacToeGame {
 		whoPlaysFirst();
 		makeMove(getUserMove(), USER);
 		showBoard();
-		System.out.println(getComputerMove());
-		
+		makeMove(getComputerMove(), COMPUTER);
+		showBoard();		
 	}
 }
